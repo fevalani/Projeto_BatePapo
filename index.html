@@ -15,27 +15,73 @@
 <body>
     <div class="topo">
         <div class="logo">logo</div>
-        <div class="icone"><ion-icon name="people"></ion-icon></div>
+        <div class="icone" onclick="abrirAba()"><ion-icon name="people"></ion-icon></div>
     </div>
     <div class="container">
         <ul class="chat">
             <li class="todos">
-                <span class="hora">(09:22:48) </span>
-                <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?</span>
+                <span class="hora">(09:22:48)</span>
+                <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?
+                    João reservadamente para Maria:  Oi gatinha quer tc?
+                </span>
             </li>
             <li class="aviso">
-                <span class="hora">(09:22:48) </span>
+                <span class="hora">(09:22:48)</span>
                 <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?</span>
             </li>
             <li class="reservado">
-                <span class="hora">(09:22:48) </span>
+                <span class="hora">(09:22:48)</span>
                 <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?</span>
             </li>
         </ul>
     </div>
     <div class="envio-mensagem">
-        <div class="texto">Escreva uma mensagem</div>
+        <div class="texto"><input type="text" name="texto-envio" placeholder="Escreva aqui..."></div>
         <div class="icone"><ion-icon name="paper-plane-outline"></ion-icon></div>
+    </div>
+    <div class="container-contatos">
+        <div class="botao-voltar"  onclick="abrirAba()"></div>
+        <div class="aba-contatos">
+            <p>Escolha um contato<br>para enviar mensagem:</p>
+            <ul class="contatos">
+                <li>
+                    <div>
+                        <ion-icon name="people"></ion-icon>
+                        <span>Todos</span>
+                    </div>
+                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                </li>
+                <li>
+                    <div>
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span>Todos</span>
+                    </div>
+                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                </li>
+                <li>
+                    <div>
+                        <ion-icon name="person-circle" class="gigante"></ion-icon>
+                        <span>Todos</span>
+                    </div>
+                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                </li>
+            </ul>
+            <p>Escolha uma visibilidade</p>
+            <div class="publico">
+                <div>
+                    <ion-icon name="lock-open"></ion-icon>
+                    <span>Público</span>
+                </div>
+                <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+            </div>
+            <div class="reservadamente">
+                <div>
+                    <ion-icon name="lock-closed"></ion-icon>
+                    <span>Reservadamente</span>
+                </div>
+                <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+            </div>
+        </div>
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="./js/scripts.js"></script>
