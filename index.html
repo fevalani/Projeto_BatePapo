@@ -13,57 +13,65 @@
     <title>Bate Papo Uol</title>
 </head>
 <body>
+    <div class="login">
+        <div class="logo-uol"></div>
+        <input type="text" placeholder="Digite seu nome" name="" id="">
+        <input type="button" value="Entrar">
+    </div>
     <div class="topo">
-        <div class="logo">logo</div>
+        <div class="logo"><img src="./imagens/logo 2.png" alt="logo bate papo uol"></div>
         <div class="icone" onclick="abrirAba()"><ion-icon name="people"></ion-icon></div>
     </div>
     <div class="container">
         <ul class="chat">
             <li class="todos">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?
+                <span class="texto"><strong>João</strong> reservadamente para <strong>Maria</strong>:  Oi gatinha quer tc?
                     João reservadamente para Maria:  Oi gatinha quer tc?
                 </span>
             </li>
             <li class="aviso">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?</span>
+                <span class="texto"><strong>João</strong> reservadamente para <strong>João</strong>:  Oi gatinha quer tc?</span>
             </li>
             <li class="reservado">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto">João reservadamente para Maria:  Oi gatinha quer tc?</span>
+                <span class="texto"><strong>João</strong> reservadamente para <strong>João</strong>:  Oi gatinha quer tc?</span>
             </li>
         </ul>
     </div>
     <div class="envio-mensagem">
-        <div class="texto"><input type="text" name="texto-envio" placeholder="Escreva aqui..."></div>
+        <div class="texto">
+            <input type="text" name="texto-envio" placeholder="Escreva aqui...">
+            <span>Enviando para Maria (reservadamente)</span>
+        </div>
         <div class="icone"><ion-icon name="paper-plane-outline"></ion-icon></div>
     </div>
-    <div class="container-contatos">
+    <div class="container-contatos escondido">
         <div class="botao-voltar"  onclick="abrirAba()"></div>
         <div class="aba-contatos">
             <p>Escolha um contato<br>para enviar mensagem:</p>
             <ul class="contatos">
-                <li>
+                <li onclick="selecionarContato(this)">
                     <div>
                         <ion-icon name="people"></ion-icon>
                         <span>Todos</span>
                     </div>
-                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
                 </li>
-                <li>
+                <li onclick="selecionarContato(this)">
                     <div>
                         <ion-icon name="person-circle"></ion-icon>
-                        <span>Todos</span>
+                        <span>Maria</span>
                     </div>
-                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
                 </li>
-                <li>
+                <li onclick="selecionarContato(this)">
                     <div>
                         <ion-icon name="person-circle" class="gigante"></ion-icon>
-                        <span>Todos</span>
+                        <span>José</span>
                     </div>
-                    <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
                 </li>
             </ul>
             <p>Escolha uma visibilidade</p>
@@ -72,14 +80,14 @@
                     <ion-icon name="lock-open"></ion-icon>
                     <span>Público</span>
                 </div>
-                <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
             </div>
             <div class="reservadamente">
                 <div>
                     <ion-icon name="lock-closed"></ion-icon>
                     <span>Reservadamente</span>
                 </div>
-                <ion-icon class="verde" name="checkmark-sharp"></ion-icon>
+                <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
             </div>
         </div>
     </div>
