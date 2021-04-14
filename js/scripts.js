@@ -46,21 +46,29 @@ let usuario;
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
   const carregando = document.querySelector(".login div:last-child");
+  carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
 
-  console.log(usuario);
-  if(usuario !== null && usuario !== ''){
-    carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
-    setTimeout(distribuirChat, 1000);
-  }
+  const respostaLogin = axios.post('', {nome: usuario});
+
+  respostaLogin.then(distribuirChat);
+  respostaLogin.catch(erroLogin);
+}
+
+function erroLogin(erro){
+  const loginErrado = document.querySelector(".login div:last-child");
+
+  loginErrado.innerHTML = `
+     <input class="texto-usuario" type="text" placeholder="Digite outro nome" name="usuário">
+     <input onclick="login()" class="botao-usuario" type="button" value="Entrar"></input>
+  `;
 
 }
 
-function distribuirChat(){
+function distribuirChat(dados){
+  const mensagens = dados.data;
   const esconder = document.querySelector(".login");
   esconder.classList.add('escondido');
   const chat = document.querySelector(".chat");
-
-  //enviar aviso entrar na sala
 
   for (let i = 0; i < mensagens.length; i++) {
     if(mensagens[i].status === 'reservado'){
