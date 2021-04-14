@@ -40,21 +40,22 @@ const contatos = [
     status: "online"}
 ];
 
-let nome;
+let usuario;
+distribuirChat();
 
 function login(){
-  nome = document.querySelector(".texto-usuario").value;
+  usuario = document.querySelector(".texto-usuario").value;
   const carregando = document.querySelector(".login div:last-child");
 
   console.log(nome);
   if(nome !== null && nome !== ''){
     carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
-    setTimeout(iniciar, 1000);
+    setTimeout(distribuirChat, 1000);
   }
 
 }
-iniciar();
-function iniciar(){
+
+function distribuirChat(){
   const esconder = document.querySelector(".login");
   esconder.classList.add('escondido');
   const chat = document.querySelector(".chat");
@@ -104,8 +105,24 @@ function iniciar(){
       `;
     }
   }
+  distribuirContatos();
+}
 
-  
+function distribuirContatos(){
+  const perfis = document.querySelector(".contatos");
+  for (let i = 0; i < contatos.length; i++) {
+    if(contatos[i].status === 'online'){
+      perfis.innerHTML += `
+        <li onclick="selecionarContato(this)">
+            <div>
+                <ion-icon name="person-circle"></ion-icon>
+                <span>${contatos[i].nome}</span>
+            </div>
+            <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+        </li>
+      `;
+    }
+  }
 }
 
 function abrirAba(){
