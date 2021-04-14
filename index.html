@@ -13,7 +13,7 @@
     <title>Bate Papo Uol</title>
 </head>
 <body>
-    <div class="login escondido">
+    <div class="login">
         <div class="logo-uol"><img src="./imagens/logo 2.png" alt="logo bate papo uol"></div>
         <div>
             <input class="texto-usuario" type="text" placeholder="Digite seu nome" name="usuário">
@@ -28,17 +28,25 @@
         <ul class="chat">
             <li class="todos">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto"><strong>João</strong> reservadamente para <strong>Maria</strong>:  Oi gatinha quer tc?
+                <span class="texto">
+                    <strong>João</strong> reservadamente para 
+                    <strong>Maria</strong>:  Oi gatinha quer tc?
                     João reservadamente para Maria:  Oi gatinha quer tc?
                 </span>
             </li>
             <li class="aviso">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto"><strong>João</strong> reservadamente para <strong>João</strong>:  Oi gatinha quer tc?</span>
+                <span class="texto">
+                    <strong>João</strong> reservadamente para 
+                    <strong>João</strong>:  Oi gatinha quer tc?
+                </span>
             </li>
             <li class="reservado">
                 <span class="hora">(09:22:48)</span>
-                <span class="texto"><strong>João</strong> reservadamente para <strong>João</strong>:  Oi gatinha quer tc?</span>
+                <span class="texto">
+                    <strong>João</strong> reservadamente para 
+                    <strong>João</strong>:  Oi gatinha quer tc?
+                </span>
             </li>
         </ul>
     </div>
@@ -47,7 +55,9 @@
             <input type="text" name="texto-envio" placeholder="Escreva aqui...">
             <span>Enviando para Maria (reservadamente)</span>
         </div>
-        <div class="icone"><ion-icon name="paper-plane-outline"></ion-icon></div>
+        <div class="icone" onclick="adicionarMensagem()">
+            <ion-icon name="paper-plane-outline"></ion-icon>
+        </div>
     </div>
     <div class="container-contatos escondido">
         <div class="botao-voltar"  onclick="abrirAba()"></div>
@@ -93,6 +103,7 @@
             </div>
         </div>
     </div>
+    
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="./js/scripts.js"></script>
 </body>

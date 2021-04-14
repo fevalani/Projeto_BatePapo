@@ -1,4 +1,4 @@
-const mensagem = [
+const mensagens = [
   {
     remetente: "Maria",
     destinatario: "João",
@@ -41,14 +41,14 @@ const contatos = [
 ];
 
 let usuario;
-distribuirChat();
+//distribuirChat();
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
   const carregando = document.querySelector(".login div:last-child");
 
-  console.log(nome);
-  if(nome !== null && nome !== ''){
+  console.log(usuario);
+  if(usuario !== null && usuario !== ''){
     carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
     setTimeout(distribuirChat, 1000);
   }
@@ -62,44 +62,44 @@ function distribuirChat(){
 
   //enviar aviso entrar na sala
 
-  for (let i = 0; i < mensagem.length; i++) {
-    if(mensagem[i].status === 'reservado'){
+  for (let i = 0; i < mensagens.length; i++) {
+    if(mensagens[i].status === 'reservado'){
       chat.innerHTML += `
-        <li class="${mensagem[i].status}">
+        <li class="${mensagens[i].status}">
           <span class="hora">
-            (${mensagem[i].hora})
+            (${mensagens[i].hora})
           </span>
           <span class="texto">
-            <strong>${mensagem[i].remetente}</strong>
+            <strong>${mensagens[i].remetente}</strong>
              reservadamente para 
-            <strong>${mensagem[i].destinatario}</strong>
-            :  ${mensagem[i].texto}
+            <strong>${mensagens[i].destinatario}</strong>
+            :  ${mensagens[i].texto}
           </span>
         </li>
       `;
-    }else if(mensagem[i].status === 'todos'){
+    }else if(mensagens[i].status === 'todos'){
       chat.innerHTML += `
-        <li class="${mensagem[i].status}">
+        <li class="${mensagens[i].status}">
           <span class="hora">
-            (${mensagem[i].hora})
+            (${mensagens[i].hora})
           </span>
           <span class="texto">
-            <strong>${mensagem[i].remetente}</strong>
+            <strong>${mensagens[i].remetente}</strong>
              para 
-            <strong>${mensagem[i].destinatario}</strong>
-            :  ${mensagem[i].texto}
+            <strong>${mensagens[i].destinatario}</strong>
+            :  ${mensagens[i].texto}
           </span>
         </li>
       `;
     }else{
       chat.innerHTML += `
-        <li class="${mensagem[i].status}">
+        <li class="${mensagens[i].status}">
           <span class="hora">
-            (${mensagem[i].hora})
+            (${mensagens[i].hora})
           </span>
           <span class="texto">
-            <strong>${mensagem[i].remetente}</strong>
-            ${mensagem[i].texto}
+            <strong>${mensagens[i].remetente}</strong>
+            ${mensagens[i].texto}
           </span>
         </li>
       `;
@@ -123,6 +123,24 @@ function distribuirContatos(){
       `;
     }
   }
+}
+
+function adicionarMensagem(){
+  const enviar = document.querySelector(".texto input").value;
+  const chat = document.querySelector(".chat");
+
+  chat.innerHTML += `
+    <li class="todos">
+      <span class="hora">
+        (09:22:48)
+      </span>
+      <span class="texto">
+        <strong>${usuario}</strong>: 
+        ${enviar}
+      </span>
+    </li>
+  `;
+
 }
 
 function abrirAba(){
