@@ -1,25 +1,43 @@
 const mensagem = [
-      {
-        remetente: "Maria",
-        destinatario: "João",
-        status: "todos",
-        hora: "09:10:38",
-        texto: "Oi João :)",
-      },
-      {
-        remetente: "Jorge",
-        destinatario: "Maria",
-        status: "reservado",
-        hora: "09:15:48",
-        texto: "Oi gatinha quer tc?",
-      },
-      {
-        remetente: "Soares",
-        destinatario: "Todos",
-        status: "aviso",
-        hora: "09:22:48",
-        texto: "sai da sala...",
-      },
+  {
+    remetente: "Maria",
+    destinatario: "João",
+    status: "todos",
+    hora: "09:10:38",
+    texto: "Oi João :)",
+  },
+  {
+    remetente: "Jorge",
+    destinatario: "Maria",
+    status: "reservado",
+    hora: "09:15:48",
+    texto: "Oi gatinha quer tc?",
+  },
+  {
+    remetente: "Soares",
+    destinatario: "Todos",
+    status: "aviso",
+    hora: "09:22:48",
+    texto: "sai da sala...",
+  },
+];
+
+const contatos = [
+  {
+    nome: "Maria",
+    status: "online"
+  },
+  {
+    nome: "João",
+    status: "online"
+  },
+  {
+    nome: "Marcos",
+    status: "offline"
+  },
+  {
+    nome: "Fernando",
+    status: "online"}
 ];
 
 let nome;
@@ -86,6 +104,7 @@ function iniciar(){
       `;
     }
   }
+
   
 }
 
@@ -97,12 +116,36 @@ function abrirAba(){
 function selecionarContato(valor){
     const mudar = valor.querySelector(".verde");
     const remover = document.querySelector(".selecionado");
-    if(valor.classList.contains('selecionado')){
+    
+    if(remover !== null){
+      if(remover.classList.contains('selecionado')){
         remover.classList.remove('selecionado');
         mudar.classList.add('selecionado');
-    }else{
+      }else{
         mudar.classList.add('selecionado');
+      }
+    }else{
+      mudar.classList.add('selecionado');
     }
-    
 
+    //retornar quem esta selecionado
+    
+}
+
+function selecionarVisibilidade(valor){
+  const mudar = valor.querySelector(".verde");
+  const remover = document.querySelector(".selecionar");
+
+  if(remover !== null){
+    if(remover.classList.contains('selecionar')){
+      remover.classList.remove('selecionar');
+      mudar.classList.add('selecionar');
+    }else{
+      mudar.classList.add('selecionar');
+    }
+  }else{
+    mudar.classList.add('selecionar');
+  }
+
+  //retornar o selecionado
 }
