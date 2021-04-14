@@ -2,27 +2,92 @@ const mensagem = [
       {
         remetente: "Maria",
         destinatario: "João",
-        status: "public",
-        hora: "09:22:38",
+        status: "todos",
+        hora: "09:10:38",
         texto: "Oi João :)",
       },
       {
-        remetente: "João",
+        remetente: "Jorge",
         destinatario: "Maria",
-        status: "restricted",
-        hora: "09:22:48",
+        status: "reservado",
+        hora: "09:15:48",
         texto: "Oi gatinha quer tc?",
       },
       {
-        remetente: "Maria",
+        remetente: "Soares",
         destinatario: "Todos",
-        status: "status",
+        status: "aviso",
         hora: "09:22:48",
-        text0: "Sai da sala...",
+        texto: "sai da sala...",
       },
-    ];
+];
 
-//const login = prompt("Digite o seu usuário: ");
+let nome;
+
+function login(){
+  nome = document.querySelector(".texto-usuario").value;
+  const carregando = document.querySelector(".login div:last-child");
+
+  console.log(nome);
+  if(nome !== null && nome !== ''){
+    carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
+    setTimeout(iniciar, 1000);
+  }
+
+}
+iniciar();
+function iniciar(){
+  const esconder = document.querySelector(".login");
+  esconder.classList.add('escondido');
+  const chat = document.querySelector(".chat");
+
+  //enviar aviso entrar na sala
+
+  for (let i = 0; i < mensagem.length; i++) {
+    if(mensagem[i].status === 'reservado'){
+      chat.innerHTML += `
+        <li class="${mensagem[i].status}">
+          <span class="hora">
+            (${mensagem[i].hora})
+          </span>
+          <span class="texto">
+            <strong>${mensagem[i].remetente}</strong>
+             reservadamente para 
+            <strong>${mensagem[i].destinatario}</strong>
+            :  ${mensagem[i].texto}
+          </span>
+        </li>
+      `;
+    }else if(mensagem[i].status === 'todos'){
+      chat.innerHTML += `
+        <li class="${mensagem[i].status}">
+          <span class="hora">
+            (${mensagem[i].hora})
+          </span>
+          <span class="texto">
+            <strong>${mensagem[i].remetente}</strong>
+             para 
+            <strong>${mensagem[i].destinatario}</strong>
+            :  ${mensagem[i].texto}
+          </span>
+        </li>
+      `;
+    }else{
+      chat.innerHTML += `
+        <li class="${mensagem[i].status}">
+          <span class="hora">
+            (${mensagem[i].hora})
+          </span>
+          <span class="texto">
+            <strong>${mensagem[i].remetente}</strong>
+            ${mensagem[i].texto}
+          </span>
+        </li>
+      `;
+    }
+  }
+  
+}
 
 function abrirAba(){
     const retirar = document.querySelector(".container-contatos");
