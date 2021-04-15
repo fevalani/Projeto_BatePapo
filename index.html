@@ -26,34 +26,12 @@
     </div>
     <div class="container">
         <ul class="chat">
-            <li class="message">
-                <span class="hora">(09:22:48)</span>
-                <span class="texto">
-                    <strong>João</strong> reservadamente para 
-                    <strong>Maria</strong>:  Oi gatinha quer tc?
-                    João reservadamente para Maria:  Oi gatinha quer tc?
-                </span>
-            </li>
-            <li class="status">
-                <span class="hora">(09:22:48)</span>
-                <span class="texto">
-                    <strong>João</strong> reservadamente para 
-                    <strong>João</strong>:  Oi gatinha quer tc?
-                </span>
-            </li>
-            <li class="private_message">
-                <span class="hora">(09:22:48)</span>
-                <span class="texto">
-                    <strong>João</strong> reservadamente para 
-                    <strong>João</strong>:  Oi gatinha quer tc?
-                </span>
-            </li>
         </ul>
     </div>
     <div class="envio-mensagem">
         <div class="texto">
-            <input type="text" name="texto-envio" placeholder="Escreva aqui...">
-            <span>Enviando para Maria (reservadamente)</span>
+            <input type="text" name="texto-envio" accesskey="" placeholder="Escreva aqui...">
+            <span class="aviso-mensagem"></span>
         </div>
         <div class="icone" onclick="adicionarMensagem()">
             <ion-icon name="paper-plane-outline"></ion-icon>
@@ -69,21 +47,7 @@
                         <ion-icon name="people"></ion-icon>
                         <span class="nome-selecionado">Todos</span>
                     </div>
-                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
-                </li>
-                <li onclick="selecionarContato(this)">
-                    <div>
-                        <ion-icon name="person-circle"></ion-icon>
-                        <span class="nome-selecionado">Maria</span>
-                    </div>
-                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
-                </li>
-                <li onclick="selecionarContato(this)">
-                    <div>
-                        <ion-icon name="person-circle" class="gigante"></ion-icon>
-                        <span class="nome-selecionado">José</span>
-                    </div>
-                    <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+                    <ion-icon class="verde escondido selecionado" name="checkmark-sharp"></ion-icon>
                 </li>
             </ul>
             <p>Escolha uma visibilidade</p>
@@ -92,7 +56,7 @@
                     <ion-icon name="lock-open"></ion-icon>
                     <span class="nome-visibilidade">Público</span>
                 </div>
-                <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+                <ion-icon class="verde escondido selecionado" name="checkmark-sharp"></ion-icon>
             </div>
             <div class="reservadamente" onclick="selecionarVisibilidade(this)">
                 <div>

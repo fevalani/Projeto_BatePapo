@@ -86,6 +86,8 @@ body{
     margin: 106px 0px;
 
     font-size: 14px;
+
+    overflow: hidden;
 }
 
 li{
@@ -170,6 +172,8 @@ li .hora{
     height: 100%;
 
     background-color: rgba(0,0,0,0.6);
+    
+    overflow: hidden;
 }
 
 .botao-voltar{
@@ -190,7 +194,7 @@ li .hora{
     width: 70%;
     height: 100%;
     background-color: #fff;
-
+    
     overflow: scroll;
 }
 

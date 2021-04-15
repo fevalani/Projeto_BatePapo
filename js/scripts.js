@@ -1,6 +1,8 @@
 
 
 let usuario;
+let contatoSelecionado;
+let visibilidadeSelecionada;
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
@@ -85,6 +87,9 @@ function distribuirChat(dados){
       `;
     }
   }
+
+  const ultima = document.querySelector(".chat li:last-child");
+  ultima.scrollIntoView();
   const participantes = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants');
   participantes.then(distribuirContatos);
 }
@@ -110,7 +115,7 @@ function distribuirContatos(participantes){
 
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
-  const mensagem = {from: usuario, to: "Todos", text: enviar, type: "message"};
+  const mensagem = {from: usuario, to: contatoSelecionado, text: enviar, type: visibilidadeSelecionada};
   console.log(mensagem);
 
   const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
@@ -118,7 +123,7 @@ function adicionarMensagem(){
 
 }
 
-function mensagemEnviada(oioi) {
+function mensagemEnviada() {
   console.log("mensagem enviada");
   loginAceito();
   
@@ -127,6 +132,14 @@ function mensagemEnviada(oioi) {
 function abrirAba(){
     const retirar = document.querySelector(".container-contatos");
     retirar.classList.toggle('escondido');
+
+
+    const trocarNome = document.querySelector(".aviso-mensagem");
+    if(visibilidadeSelecionada === "message"){
+      trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (publicamente)`;
+    }else{
+      trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (reservadamente)`;
+    }
 }
 
 function selecionarContato(valor){
@@ -144,10 +157,9 @@ function selecionarContato(valor){
       mudar.classList.add('selecionado');
     }
 
-    //retornar quem esta selecionado
-    let contatoSelecionado = mudar.classList.contains('selecionado').innerHTML;
-    console.log(contatoSelecionado);
     
+    contatoSelecionado = mudar.parentNode.querySelector(".nome-selecionado").innerHTML;
+
 }
 
 function selecionarVisibilidade(valor){
@@ -165,5 +177,10 @@ function selecionarVisibilidade(valor){
     mudar.classList.add('selecionar');
   }
 
-  //retornar o selecionado
+  visibilidadeSelecionada = mudar.parentNode.querySelector(".nome-visibilidade").innerHTML;
+  if(visibilidadeSelecionada === "Público"){
+    visibilidadeSelecionada = "message";
+  }else{
+    visibilidadeSelecionada = "private-message";
+  }
 }
