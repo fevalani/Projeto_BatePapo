@@ -102,15 +102,15 @@ li .hora{
     margin-right: 8px;
 }
 
-.todos{
+.message{
     background-color: #fff;
 }
 
-.aviso{
+.status{
     background-color: #dcdcdc;
 }
 
-.reservado{
+.private-message{
     background-color: #ffdede;
 }
 

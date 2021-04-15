@@ -1,56 +1,15 @@
-const mensagens = [
-  {
-    remetente: "Maria",
-    destinatario: "João",
-    status: "todos",
-    hora: "09:10:38",
-    texto: "Oi João :)",
-  },
-  {
-    remetente: "Jorge",
-    destinatario: "Maria",
-    status: "reservado",
-    hora: "09:15:48",
-    texto: "Oi gatinha quer tc?",
-  },
-  {
-    remetente: "Soares",
-    destinatario: "Todos",
-    status: "aviso",
-    hora: "09:22:48",
-    texto: "sai da sala...",
-  },
-];
 
-const contatos = [
-  {
-    nome: "Maria",
-    status: "online"
-  },
-  {
-    nome: "João",
-    status: "online"
-  },
-  {
-    nome: "Marcos",
-    status: "offline"
-  },
-  {
-    nome: "Fernando",
-    status: "online"}
-];
 
 let usuario;
-//distribuirChat();
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
   const carregando = document.querySelector(".login div:last-child");
   carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
 
-  const respostaLogin = axios.post('https://dauhdsaciua', {nome: usuario});
+  const respostaLogin = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants', {name: usuario});
 
-  respostaLogin.then(distribuirChat);
+  respostaLogin.then(loginAceito);
   respostaLogin.catch(erroLogin);
 }
 
@@ -58,10 +17,21 @@ function erroLogin(erro){
   const loginErrado = document.querySelector(".login div:last-child");
 
   loginErrado.innerHTML = `
-     <input class="texto-usuario" type="text" placeholder="Digite outro nome" name="usuário">
+     <input class="texto-usuario" type="text" placeholder="Digite outro nome, usuário já em uso!" name="usuário">
      <input onclick="login()" class="botao-usuario" type="button" value="Entrar"></input>
   `;
-  login();
+}
+
+function loginAceito(respostaLogin){
+  const promessa = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages');
+  promessa.then(distribuirChat);
+
+  //setInterval(estouOnline, 5000);
+  //setInterval(loginAceito, 3000);
+}
+
+function estouOnline(){
+  const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status', {name: usuario});
 }
 
 function distribuirChat(dados){
@@ -71,84 +41,84 @@ function distribuirChat(dados){
   const chat = document.querySelector(".chat");
 
   for (let i = 0; i < mensagens.length; i++) {
-    if(mensagens[i].status === 'reservado'){
+    if(mensagens[i].type === 'private_message'){
+      if(mensagem[i].to === usuario){
+        chat.innerHTML += `
+          <li class="${mensagens[i].type}">
+            <span class="hora">
+              (${mensagens[i].time})
+            </span>
+            <span class="texto">
+              <strong>${mensagens[i].from}</strong>
+              reservadamente para 
+              <strong>${mensagens[i].to}</strong>
+              :  ${mensagens[i].text}
+            </span>
+          </li>
+        `;
+      }
+    }else if(mensagens[i].type === 'message'){
       chat.innerHTML += `
-        <li class="${mensagens[i].status}">
+        <li class="${mensagens[i].type}">
           <span class="hora">
-            (${mensagens[i].hora})
+            (${mensagens[i].time})
           </span>
           <span class="texto">
-            <strong>${mensagens[i].remetente}</strong>
-             reservadamente para 
-            <strong>${mensagens[i].destinatario}</strong>
-            :  ${mensagens[i].texto}
-          </span>
-        </li>
-      `;
-    }else if(mensagens[i].status === 'todos'){
-      chat.innerHTML += `
-        <li class="${mensagens[i].status}">
-          <span class="hora">
-            (${mensagens[i].hora})
-          </span>
-          <span class="texto">
-            <strong>${mensagens[i].remetente}</strong>
+            <strong>${mensagens[i].from}</strong>
              para 
-            <strong>${mensagens[i].destinatario}</strong>
-            :  ${mensagens[i].texto}
+            <strong>${mensagens[i].to}</strong>
+            :  ${mensagens[i].text}
           </span>
         </li>
       `;
     }else{
       chat.innerHTML += `
-        <li class="${mensagens[i].status}">
+        <li class="${mensagens[i].type}">
           <span class="hora">
-            (${mensagens[i].hora})
+            (${mensagens[i].time})
           </span>
           <span class="texto">
-            <strong>${mensagens[i].remetente}</strong>
-            ${mensagens[i].texto}
+            <strong>${mensagens[i].from}</strong>
+            ${mensagens[i].text}
           </span>
         </li>
       `;
     }
   }
-  distribuirContatos();
+  const participantes = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants');
+  participantes.then(distribuirContatos);
 }
 
-function distribuirContatos(){
+function distribuirContatos(participantes){
+  const contatos = participantes.data;
   const perfis = document.querySelector(".contatos");
   for (let i = 0; i < contatos.length; i++) {
-    if(contatos[i].status === 'online'){
-      perfis.innerHTML += `
-        <li onclick="selecionarContato(this)">
-            <div>
-                <ion-icon name="person-circle"></ion-icon>
-                <span>${contatos[i].nome}</span>
-            </div>
-            <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
-        </li>
-      `;
-    }
+    perfis.innerHTML += `
+      <li onclick="selecionarContato(this)">
+          <div>
+              <ion-icon name="person-circle"></ion-icon>
+              <span>${contatos[i].name}</span>
+          </div>
+          <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+      </li>
+    `;
   }
 }
 
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
-  const chat = document.querySelector(".chat");
+  const mensagem = {from: usuario, to: "Todos", text: enviar, type: "message"};
+  console.log(mensagem);
 
-  chat.innerHTML += `
-    <li class="todos">
-      <span class="hora">
-        (09:22:48)
-      </span>
-      <span class="texto">
-        <strong>${usuario}</strong>: 
-        ${enviar}
-      </span>
-    </li>
-  `;
+  const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
+  promessa.then(mensagemEnviada);
 
+}
+
+function mensagemEnviada(oioi) {
+  console.log("mensagem enviada");
+  loginAceito();
+  
 }
 
 function abrirAba(){
