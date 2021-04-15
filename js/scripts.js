@@ -42,7 +42,7 @@ function distribuirChat(dados){
 
   for (let i = 0; i < mensagens.length; i++) {
     if(mensagens[i].type === 'private_message'){
-      if(mensagem[i].to === usuario){
+      if(mensagens[i].to === usuario){
         chat.innerHTML += `
           <li class="${mensagens[i].type}">
             <span class="hora">
@@ -92,16 +92,19 @@ function distribuirChat(dados){
 function distribuirContatos(participantes){
   const contatos = participantes.data;
   const perfis = document.querySelector(".contatos");
+  
   for (let i = 0; i < contatos.length; i++) {
-    perfis.innerHTML += `
-      <li onclick="selecionarContato(this)">
-          <div>
-              <ion-icon name="person-circle"></ion-icon>
-              <span>${contatos[i].name}</span>
-          </div>
-          <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
-      </li>
-    `;
+    if(contatos[i].name !== usuario){
+      perfis.innerHTML += `
+        <li onclick="selecionarContato(this)">
+            <div>
+                <ion-icon name="person-circle"></ion-icon>
+                <span class="nome-selecionado">${contatos[i].name}</span>
+            </div>
+            <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+        </li>
+      `;
+    }
   }
 }
 
@@ -142,6 +145,8 @@ function selecionarContato(valor){
     }
 
     //retornar quem esta selecionado
+    let contatoSelecionado = mudar.classList.contains('selecionado').innerHTML;
+    console.log(contatoSelecionado);
     
 }
 
