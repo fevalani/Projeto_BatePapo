@@ -28,8 +28,8 @@ function loginAceito(respostaLogin){
   const promessa = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages');
   promessa.then(distribuirChat);
 
-  //setInterval(estouOnline, 5000);
-  //setInterval(loginAceito, 3000);
+  setInterval(estouOnline, 5000);
+  setInterval(loginAceito, 3000);
 }
 
 function estouOnline(){
@@ -116,7 +116,6 @@ function distribuirContatos(participantes){
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
   const mensagem = {from: usuario, to: contatoSelecionado, text: enviar, type: visibilidadeSelecionada};
-  console.log(mensagem);
 
   const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
   promessa.then(mensagemEnviada);
