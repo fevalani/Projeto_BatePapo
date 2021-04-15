@@ -48,7 +48,7 @@ function login(){
   const carregando = document.querySelector(".login div:last-child");
   carregando.innerHTML = "<img src='./imagens/200.gif' alt='logo bate papo uol'>";
 
-  const respostaLogin = axios.post('', {nome: usuario});
+  const respostaLogin = axios.post('https://dauhdsaciua', {nome: usuario});
 
   respostaLogin.then(distribuirChat);
   respostaLogin.catch(erroLogin);
@@ -61,7 +61,7 @@ function erroLogin(erro){
      <input class="texto-usuario" type="text" placeholder="Digite outro nome" name="usuário">
      <input onclick="login()" class="botao-usuario" type="button" value="Entrar"></input>
   `;
-
+  login();
 }
 
 function distribuirChat(dados){
