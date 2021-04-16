@@ -2,11 +2,13 @@ let usuario;
 let contatoSelecionado = "Todos";
 let visibilidadeSelecionada = "message";
 
-document.querySelector(".botao-usuario").addEventListener("keydown", (e) => {
-  if(e.key === 'Enter'){
+
+document.querySelector(".texto-usuario").addEventListener("keypress", function(event){
+  if(event.keyCode === 13){
+    event.preventDefault();
     login();
   }
-})
+});
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
@@ -20,22 +22,31 @@ function login(){
 }
 
 function erroLogin(erro){
-  const loginErrado = document.querySelector(".login div:last-child");
+  if(erro.response.status === 400){
+    alert("Ihh rapaz, esse nome já está sendo utilizado");
+    const loginErrado = document.querySelector(".login div:last-child");
 
-  loginErrado.innerHTML = `
-     <input class="texto-usuario" type="text" placeholder="Digite outro nome, usuário já em uso!" name="usuário">
-     <input onclick="login()" class="botao-usuario" type="button" value="Entrar"></input>
-  `;
+    loginErrado.innerHTML = `
+      <input class="texto-usuario" type="text" placeholder="Digite outro nome, usuário já em uso!" name="usuário">
+      <input onclick="login()" class="botao-usuario" type="button" value="Entrar"></input>
+    `;
+  }
 }
 
 function loginAceito(respostaLogin) {
   setInterval(estouOnline, 5000);
   setInterval(receberDados, 3000);
+  setInterval(receberParticipantes, 10000);
 }
 
 function receberDados(){
   const promessa = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages');
   promessa.then(distribuirChat);
+}
+
+function receberParticipantes() {
+  const participantes = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants');
+  participantes.then(distribuirContatos);
 }
 
 function estouOnline(){
@@ -51,7 +62,7 @@ function distribuirChat(dados){
   chat.innerHTML = '';
 
   for (let i = 0; i < mensagens.length; i++) {
-    if(mensagens[i].type === 'private_message' /*&& mensagens[i].to === usuario*/){
+    if(mensagens[i].type === 'private_message' && mensagens[i].to === usuario){
       chat.innerHTML += `
         <li class="${mensagens[i].type}">
           <span class="hora">
@@ -96,8 +107,6 @@ function distribuirChat(dados){
 
   const ultima = document.querySelector(".chat li:last-child");
   ultima.scrollIntoView();
-  const participantes = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants');
-  participantes.then(distribuirContatos);
 }
 
 function distribuirContatos(participantes){
@@ -115,50 +124,56 @@ function distribuirContatos(participantes){
   `;
   
   for (let i = 0; i < contatos.length; i++) {
-    if(contatos[i].name !== usuario && contatos[i].name === contatoSelecionado){
-      perfis.innerHTML += `
-      <li onclick="selecionarContato(this)">
-          <div>
-              <ion-icon name="person-circle"></ion-icon>
-              <span class="nome-selecionado">${contatos[i].name}</span>
-          </div>
-          <ion-icon class="verde escondido selecionado" name="checkmark-sharp"></ion-icon>
-      </li>
-    `;
-    }else{
-      perfis.innerHTML += `
+    if(contatos[i].name !== usuario){
+      if(contatos[i].name === contatoSelecionado){
+        perfis.innerHTML += `
         <li onclick="selecionarContato(this)">
             <div>
                 <ion-icon name="person-circle"></ion-icon>
                 <span class="nome-selecionado">${contatos[i].name}</span>
             </div>
-            <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+            <ion-icon class="verde escondido selecionado" name="checkmark-sharp"></ion-icon>
         </li>
       `;
+      }else{
+        perfis.innerHTML += `
+          <li onclick="selecionarContato(this)">
+              <div>
+                  <ion-icon name="person-circle"></ion-icon>
+                  <span class="nome-selecionado">${contatos[i].name}</span>
+              </div>
+              <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+          </li>
+        `;
+      }
     }
   }
 }
 
-document.querySelector(".icone").addEventListener("keydown", (e) => {
-  if(e.key === 'Enter'){
+document.querySelector(".texto-input").addEventListener("keydown", (e) => {
+  if(e.keyCode === 13){
     adicionarMensagem();
   }
-})
+});
 
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
   const mensagem = {from: usuario, to: contatoSelecionado, text: enviar, type: visibilidadeSelecionada};
-  console.log(mensagem);
 
   const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
   promessa.then(mensagemEnviada);
+  promessa.catch(mensagemErro);
 
   document.querySelector(".texto input").value = "";
 }
 
+function mensagemErro(){
+  alert("Usuário offline");
+  window.location.reload();
+}
+
 function mensagemEnviada() {
   receberDados();
-  console.log("mensagem enviada");
 }
 
 function abrirAba(){
