@@ -1,8 +1,8 @@
 
 
 let usuario;
-let contatoSelecionado;
-let visibilidadeSelecionada;
+let contatoSelecionado = "Todos";
+let visibilidadeSelecionada = "message";
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
@@ -24,12 +24,14 @@ function erroLogin(erro){
   `;
 }
 
-function loginAceito(respostaLogin){
+function loginAceito(respostaLogin) {
+  setInterval(estouOnline, 5000);
+  setInterval(receberDados, 3000);
+}
+
+function receberDados(){
   const promessa = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages');
   promessa.then(distribuirChat);
-
-  setInterval(estouOnline, 5000);
-  setInterval(loginAceito, 3000);
 }
 
 function estouOnline(){
@@ -43,22 +45,20 @@ function distribuirChat(dados){
   const chat = document.querySelector(".chat");
 
   for (let i = 0; i < mensagens.length; i++) {
-    if(mensagens[i].type === 'private_message'){
-      if(mensagens[i].to === usuario){
-        chat.innerHTML += `
-          <li class="${mensagens[i].type}">
-            <span class="hora">
-              (${mensagens[i].time})
-            </span>
-            <span class="texto">
-              <strong>${mensagens[i].from}</strong>
-              reservadamente para 
-              <strong>${mensagens[i].to}</strong>
-              :  ${mensagens[i].text}
-            </span>
-          </li>
-        `;
-      }
+    if(mensagens[i].type === 'private_message' && mensagens[i].to === usuario){
+      chat.innerHTML += `
+        <li class="${mensagens[i].type}">
+          <span class="hora">
+            (${mensagens[i].time})
+          </span>
+          <span class="texto">
+            <strong>${mensagens[i].from}</strong>
+            reservadamente para 
+            <strong>${mensagens[i].to}</strong>
+            :  ${mensagens[i].text}
+          </span>
+        </li>
+      `;
     }else if(mensagens[i].type === 'message'){
       chat.innerHTML += `
         <li class="${mensagens[i].type}">
@@ -116,48 +116,47 @@ function distribuirContatos(participantes){
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
   const mensagem = {from: usuario, to: contatoSelecionado, text: enviar, type: visibilidadeSelecionada};
+  console.log(mensagem);
 
-  const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
-  promessa.then(mensagemEnviada);
+  //const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
+  //promessa.then(mensagemEnviada);
 
 }
 
 function mensagemEnviada() {
   console.log("mensagem enviada");
-  loginAceito();
-  
 }
 
 function abrirAba(){
-    const retirar = document.querySelector(".container-contatos");
-    retirar.classList.toggle('escondido');
+  const retirar = document.querySelector(".container-contatos");
+  retirar.classList.toggle('escondido');
 
 
-    const trocarNome = document.querySelector(".aviso-mensagem");
-    if(visibilidadeSelecionada === "message"){
-      trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (publicamente)`;
-    }else{
-      trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (reservadamente)`;
-    }
+  const trocarNome = document.querySelector(".aviso-mensagem");
+  if(visibilidadeSelecionada === "message"){
+    trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (publicamente)`;
+  }else{
+    trocarNome.innerHTML = `Enviando para ${contatoSelecionado} (reservadamente)`;
+  }
 }
 
 function selecionarContato(valor){
-    const mudar = valor.querySelector(".verde");
-    const remover = document.querySelector(".selecionado");
-    
-    if(remover !== null){
-      if(remover.classList.contains('selecionado')){
-        remover.classList.remove('selecionado');
-        mudar.classList.add('selecionado');
-      }else{
-        mudar.classList.add('selecionado');
-      }
+  const mudar = valor.querySelector(".verde");
+  const remover = document.querySelector(".selecionado");
+  
+  if(remover !== null){
+    if(remover.classList.contains('selecionado')){
+      remover.classList.remove('selecionado');
+      mudar.classList.add('selecionado');
     }else{
       mudar.classList.add('selecionado');
     }
+  }else{
+    mudar.classList.add('selecionado');
+  }
 
-    
-    contatoSelecionado = mudar.parentNode.querySelector(".nome-selecionado").innerHTML;
+  
+  contatoSelecionado = mudar.parentNode.querySelector(".nome-selecionado").innerHTML;
 
 }
 
