@@ -1,8 +1,12 @@
-
-
 let usuario;
 let contatoSelecionado = "Todos";
 let visibilidadeSelecionada = "message";
+
+document.querySelector(".botao-usuario").addEventListener("keydown", (e) => {
+  if(e.key === 'Enter'){
+    login();
+  }
+})
 
 function login(){
   usuario = document.querySelector(".texto-usuario").value;
@@ -44,8 +48,10 @@ function distribuirChat(dados){
   esconder.classList.add('escondido');
   const chat = document.querySelector(".chat");
 
+  chat.innerHTML = '';
+
   for (let i = 0; i < mensagens.length; i++) {
-    if(mensagens[i].type === 'private_message' && mensagens[i].to === usuario){
+    if(mensagens[i].type === 'private_message' /*&& mensagens[i].to === usuario*/){
       chat.innerHTML += `
         <li class="${mensagens[i].type}">
           <span class="hora">
@@ -97,9 +103,29 @@ function distribuirChat(dados){
 function distribuirContatos(participantes){
   const contatos = participantes.data;
   const perfis = document.querySelector(".contatos");
+
+  perfis.innerHTML = `
+    <li onclick="selecionarContato(this)">
+      <div>
+          <ion-icon name="people"></ion-icon>
+          <span class="nome-selecionado">Todos</span>
+      </div>
+      <ion-icon class="verde escondido" name="checkmark-sharp"></ion-icon>
+    </li>
+  `;
   
   for (let i = 0; i < contatos.length; i++) {
-    if(contatos[i].name !== usuario){
+    if(contatos[i].name !== usuario && contatos[i].name === contatoSelecionado){
+      perfis.innerHTML += `
+      <li onclick="selecionarContato(this)">
+          <div>
+              <ion-icon name="person-circle"></ion-icon>
+              <span class="nome-selecionado">${contatos[i].name}</span>
+          </div>
+          <ion-icon class="verde escondido selecionado" name="checkmark-sharp"></ion-icon>
+      </li>
+    `;
+    }else{
       perfis.innerHTML += `
         <li onclick="selecionarContato(this)">
             <div>
@@ -113,17 +139,25 @@ function distribuirContatos(participantes){
   }
 }
 
+document.querySelector(".icone").addEventListener("keydown", (e) => {
+  if(e.key === 'Enter'){
+    adicionarMensagem();
+  }
+})
+
 function adicionarMensagem(){
   const enviar = document.querySelector(".texto input").value;
   const mensagem = {from: usuario, to: contatoSelecionado, text: enviar, type: visibilidadeSelecionada};
   console.log(mensagem);
 
-  //const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
-  //promessa.then(mensagemEnviada);
+  const promessa = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages', mensagem);
+  promessa.then(mensagemEnviada);
 
+  document.querySelector(".texto input").value = "";
 }
 
 function mensagemEnviada() {
+  receberDados();
   console.log("mensagem enviada");
 }
 

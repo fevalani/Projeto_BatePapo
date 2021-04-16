@@ -112,7 +112,7 @@ li .hora{
     background-color: #dcdcdc;
 }
 
-.private-message{
+.private_message{
     background-color: #ffdede;
 }
 
@@ -139,6 +139,7 @@ li .hora{
     background-color: #fff;
 
     font-style: italic;
+    outline: none;
 
     font-size: 18px;
 }
